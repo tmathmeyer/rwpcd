@@ -14,7 +14,6 @@
  */
 #define WALLPAPER_DIRECTORY "/home/ted/Documents/Pictures/wallpaper"
 
-
 /*
  * the fallback image to use in case shit hits the fan
  */
@@ -31,3 +30,14 @@
  *
  */
 #define TILE_STYLE "--bg-scale"
+
+/*
+ * The interval to change wallpaper (in seconds)
+ *
+ */
+#define DAEMON_DELAY 300
+
+/*
+ * The file to touch to stop the daemon
+ */
+#define STOPFILE_PATH "/home/ted/daemons/stop_rwpcd"
