@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
         useage();
         return 0;
     }
-    
+
     if (get_flag("v") || get_flag("-version")) {
         version();
         return 0;
@@ -166,5 +166,5 @@ void change_background() {
 
 
 int file_exists(char* path) {
-    return fopen(path, "r") != NULL;
+  return !access(path,F_OK);
 }
