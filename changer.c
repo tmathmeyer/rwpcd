@@ -17,7 +17,7 @@
 #include <sys/stat.h>
 
 #include "config.h"
-#include "flags/flags.h"
+#include "flags.h"
 
 typedef struct llname{
     struct llname* next;

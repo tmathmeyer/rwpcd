@@ -9,11 +9,14 @@
 
 
 
-rwpcd: changer.c config.h
-	gcc -Wall changer.c -o rwpcd -lflags
+rwpcd: changer.c config.h flags.o
+	gcc -Wall changer.c flags.o -o rwpcd
+
+flags.o: flags.c flags.h
+	gcc -c flags.c
 
 install: rwpcd
-	echo "not yet"
+	cp rwpcd /usr/local/bin/rwpcd
 
 clean:
 	rm *.o rwpcd

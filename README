@@ -1,0 +1,5 @@
+RWPCD
+
+reverse wallpaper changing daemon is a lightweight daemon
+that changes wallpaper using feh. configuration can be found
+in config.h

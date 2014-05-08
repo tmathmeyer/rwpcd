@@ -1,2 +1,4 @@
 *.out
 rwpcd
+*.o
+*.a
