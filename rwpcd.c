@@ -31,13 +31,17 @@ int file_exists(char* path);
 void change_background(void);
 void run_as_daemon(void);
 void stop_daemon(void);
-void useage(void);
+void usage(char* name);
 void version(void);
 
 static int TIMEOUT = 0;
 
 
 int main(int argc, char** argv) {
+		if(argc == 1){
+			usage(argv[0]);
+			return 0;
+		}
     srand(time(NULL));
     char* arg_flags[] = {"t", "-timeout"};
     set_flags_with_args(arg_flags, 2);
@@ -45,7 +49,7 @@ int main(int argc, char** argv) {
 
 
     if (get_flag("-help") || get_flag("h")) {
-        useage();
+        usage(argv[0]);
         return 0;
     }
 
@@ -73,14 +77,15 @@ int main(int argc, char** argv) {
 }
 
 /*
- * prints useage information
+ * prints usage information
  */
-void useage(){
-    puts("-h --help    : this information");
-    puts("-v --version : version informaiton");
-    puts("-d --daemon  : run as a daemon");
-    puts("-t --timeout : the timeout to use if run as daemon");
-    puts("-s --stop    : stop the daemon if it is running");
+void usage(char* name){
+		printf("%s [OPTIONS]\n", name);
+    puts("\t-h --help    : this information");
+    puts("\t-v --version : version informaiton");
+    puts("\t-d --daemon  : run as a daemon");
+    puts("\t-t --timeout : the timeout to use if run as daemon");
+    puts("\t-s --stop    : stop the daemon if it is running");
 }
 
 /*
