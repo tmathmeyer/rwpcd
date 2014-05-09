@@ -1,20 +1,19 @@
 /*
- * Ted Meyer
- * config file for rwpcd
+ * Ted Meyer, Joe Jevnik
+ * rwpcd
  * random wallpaper changing daemon
  * GPL v2
  *
- * 2014-05-07
+ * 2014-05-08
  *
  */
-
-
 #include <dirent.h>
 #include <unistd.h>
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 #include "config.h"
 #include "flags.h"
@@ -27,11 +26,11 @@ typedef struct llname{
 
 
 int file_exists(char* path);
-void change_background(void);
+void change_wallpaper(void);
 void run_as_daemon(void);
+void stop_daemon(void);
 void useage(void);
 void version(void);
-
 
 
 int main(int argc, char** argv) {
@@ -50,32 +49,35 @@ int main(int argc, char** argv) {
 
     if (get_flag("d") || get_flag("-daemon")) {
         run_as_daemon();
-        //exit called in r_a_d() no need for return
+        // exit called in run_as_daemon() no need for return
+    }
+
+    if(get_flag("s") || get_flag("-stop")) {
+        stop_daemon();
+        return 0;
     }
 
 
-    change_background();
+    change_wallpaper();
 
     return 0;
 }
 
 
-void useage(void) {
+void useage(){
     puts("-h --help    : this information");
     puts("-v --version : version informaiton");
     puts("-d --daemon  : run as a daemon");
+    puts("-s --stop    : stop the daemon if it is running");
 }
 
-void version(void) {
+void version(){
     puts("rwpcd  ->  random wallpaper changer daemon");
-    puts("version 1.0");
+    puts("version 1.1");
 }
 
-
-
-
-void run_as_daemon(void)
-{
+// Starts rwcd as in daemon mode.
+void run_as_daemon(){
     pid_t pid, sid;
     pid = fork();
 
@@ -110,21 +112,19 @@ void run_as_daemon(void)
 
     while (!file_exists(STOPFILE_PATH)) {
         sleep(DAEMON_DELAY);
-        change_background();
+        change_wallpaper();
     }
 
-    // delete the stopfile
+    // Reset to the FALLBACK_IMAGE.
+    system("feh " TILE_STYLE " " FALLBACK_IMAGE);
+
+    // delete the stopfile.
     unlink(STOPFILE_PATH);
 }
 
-
-
-
-
-
-
-
-void change_background() {
+// Changes the wallpaper to a random wallpaper in your WALLPAPER_DIRECTORY as
+// defined in config.h
+void change_wallpaper(){
     struct dirent* dir;
     _LL_* names;
     int size = 0;
@@ -135,7 +135,7 @@ void change_background() {
         while ((dir = readdir(pwd)) != NULL) {
             char* name = dir->d_name;
             if (*name != '.') {
-                _LL_* newname = (_LL_*)malloc(sizeof(struct llname));
+                _LL_* newname = malloc(sizeof(struct llname));
                 newname -> next = names;
                 newname -> name = name;
                 names = newname;
@@ -150,21 +150,20 @@ void change_background() {
         touse = touse -> next;
     }
 
-    char* pname = WALLPAPER_DIRECTORY;
     char* fname = touse -> name;
-    char* flags = TILE_STYLE;
 
-    // meh, hopefully long enough
-    char exec_command[2048];
-    snprintf(exec_command, sizeof exec_command, "feh %s %s/%s", flags, pname, fname);
+    char exec_command[BUFSIZ];
+    snprintf(exec_command, sizeof(exec_command), "feh " TILE_STYLE " "
+             WALLPAPER_DIRECTORY "/%s", fname);
     system(exec_command);
 }
 
+// Stops the daemon by creating and closing the STOPFILE
+void stop_daemon(){
+    close(creat(STOPFILE_PATH, O_RDWR));
+}
 
-
-
-
-
-int file_exists(char* path) {
-  return !access(path,F_OK);
+// return: 0 if file does not exist, non-zero otherwise.
+int file_exists(char* path){
+    return !access(path,F_OK);
 }

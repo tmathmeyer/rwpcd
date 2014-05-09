@@ -1,5 +1,7 @@
 RWPCD
 
-reverse wallpaper changing daemon is a lightweight daemon
-that changes wallpaper using feh. configuration can be found
-in config.h
+reverse wallpaper changing daemon is a lightweight daemon that changes wallpaper
+using feh (https://github.com/derf/feh).
+
+Configuration can be found in config.h, copy config.h.template and save as:
+config.h with your changes.
