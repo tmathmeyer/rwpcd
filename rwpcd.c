@@ -5,6 +5,7 @@
  *
  * contributors:
  *  -Joe Jevnik @ 2014-05-08
+ *  -Nilesh Patel @ 2014-05-09
  *
  */
 
@@ -38,10 +39,11 @@ static int TIMEOUT = 0;
 
 
 int main(int argc, char** argv) {
-		if(argc == 1){
-			usage(argv[0]);
-			return 0;
-		}
+    if(argc == 1){
+       usage(argv[0]);
+        return 0;
+    }
+
     srand(time(NULL));
     char* arg_flags[] = {"t", "-timeout"};
     set_flags_with_args(arg_flags, 2);
@@ -80,7 +82,7 @@ int main(int argc, char** argv) {
  * prints usage information
  */
 void usage(char* name){
-		printf("%s [OPTIONS]\n", name);
+    printf("%s [OPTIONS]\n", name);
     puts("\t-h --help    : this information");
     puts("\t-v --version : version informaiton");
     puts("\t-d --daemon  : run as a daemon");
