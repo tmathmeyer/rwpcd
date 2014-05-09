@@ -144,7 +144,7 @@ void change_background() {
         while ((dir = readdir(pwd)) != NULL) {
             char* name = dir->d_name;
             if (*name != '.') {
-                _LL_* newname = (_LL_*)malloc(sizeof(struct llname));
+                _LL_* newname = malloc(sizeof(struct llname));
                 newname -> next = names;
                 newname -> name = name;
                 names = newname;
