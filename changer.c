@@ -32,11 +32,16 @@ void run_as_daemon(void);
 void useage(void);
 void version(void);
 
+static int TIMEOUT = 0;
+
 
 
 int main(int argc, char** argv) {
     srand(time(NULL));
+    char* arg_flags[] = {"t", "-timeout"};
+    set_flags_with_args(arg_flags, 2);
     parse_flags(argv+1, argc-1);
+
 
     if (get_flag("-help") || get_flag("h")) {
         useage();
@@ -49,8 +54,10 @@ int main(int argc, char** argv) {
     }
 
     if (get_flag("d") || get_flag("-daemon")) {
+        char* l = get_flag("t");
+        char* s = get_flag("-timeout");
+        TIMEOUT = l==NULL?s==NULL?0:atoi(s):atoi(l);
         run_as_daemon();
-        //exit called in r_a_d() no need for return
     }
 
 
@@ -64,6 +71,7 @@ void useage(void) {
     puts("-h --help    : this information");
     puts("-v --version : version informaiton");
     puts("-d --daemon  : run as a daemon");
+    puts("-t --timeout : the timeout to use if run as daemon");
 }
 
 void version(void) {
@@ -109,12 +117,13 @@ void run_as_daemon(void)
     close(STDERR_FILENO);
 
     while (!file_exists(STOPFILE_PATH)) {
-        sleep(DAEMON_DELAY);
+        sleep(TIMEOUT?TIMEOUT:DAEMON_DELAY);
         change_background();
     }
 
     // delete the stopfile
     unlink(STOPFILE_PATH);
+    exit(EXIT_SUCCESS);
 }
 
 
@@ -142,7 +151,10 @@ void change_background() {
                 size ++;
             }
         }
+        closedir(pwd);
     }
+
+
 
     int r = rand() % size;
     _LL_* touse = names;
