@@ -39,11 +39,6 @@ static int TIMEOUT = 0;
 
 
 int main(int argc, char** argv) {
-    if(argc == 1){
-       usage(argv[0]);
-        return 0;
-    }
-
     srand(time(NULL));
     char* arg_flags[] = {"t", "-timeout"};
     set_flags_with_args(arg_flags, 2);
@@ -166,6 +161,9 @@ void change_background() {
             }
         }
         closedir(pwd);
+    } else {
+        puts("please fix your config.h and rebuild");
+        exit(EXIT_FAILURE);
     }
 
     int r = rand() % size;
