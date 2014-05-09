@@ -81,11 +81,11 @@ int main(int argc, char** argv) {
  */
 void usage(char* name){
 		printf("%s [OPTIONS]\n", name);
-    puts("-h --help    : this information");
-    puts("-v --version : version informaiton");
-    puts("-d --daemon  : run as a daemon");
-    puts("-t --timeout : the timeout to use if run as daemon");
-    puts("-s --stop    : stop the daemon if it is running");
+    puts("\t-h --help    : this information");
+    puts("\t-v --version : version informaiton");
+    puts("\t-d --daemon  : run as a daemon");
+    puts("\t-t --timeout : the timeout to use if run as daemon");
+    puts("\t-s --stop    : stop the daemon if it is running");
 }
 
 /*
