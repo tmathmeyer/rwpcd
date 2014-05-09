@@ -26,7 +26,7 @@ typedef struct llname{
 
 
 int file_exists(char* path);
-void change_wallpaper(void);
+void change_background(void);
 void run_as_daemon(void);
 void stop_daemon(void);
 void useage(void);
@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
     }
 
 
-    change_wallpaper();
+    change_background();
 
     return 0;
 }
@@ -112,7 +112,7 @@ void run_as_daemon(){
 
     while (!file_exists(STOPFILE_PATH)) {
         sleep(DAEMON_DELAY);
-        change_wallpaper();
+        change_background();
     }
 
     // Reset to the FALLBACK_IMAGE.
@@ -124,7 +124,7 @@ void run_as_daemon(){
 
 // Changes the wallpaper to a random wallpaper in your WALLPAPER_DIRECTORY as
 // defined in config.h
-void change_wallpaper(){
+void change_background(){
     struct dirent* dir;
     _LL_* names;
     int size = 0;
