@@ -1,10 +1,11 @@
 /*
- * Ted Meyer
+ * Author: Ted Meyer @ 2014-05-07
  * config file for rwpcd
  * random wallpaper changing daemon
  * GPL v2
  *
- * 2014-05-07
+ * contributors:
+ *	-Joe Jevnik @ 2014-05-08
  *
  */
 

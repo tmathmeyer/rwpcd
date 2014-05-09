@@ -1,10 +1,11 @@
 /*
- * Ted Meyer
+ * Author: Ted Meyer @ 2014-05-07
  * config file for rwpcd
  * random wallpaper changing daemon
  * GPL v2
  *
- * 2014-05-07
+ * contributors:
+ *  -Joe Jevnik @ 2014-05-08
  *
  */
 
@@ -15,6 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 #include "config.h"
 #include "flags.h"
@@ -29,11 +31,11 @@ typedef struct llname{
 int file_exists(char* path);
 void change_background(void);
 void run_as_daemon(void);
+void stop_daemon(void);
 void useage(void);
 void version(void);
 
 static int TIMEOUT = 0;
-
 
 
 int main(int argc, char** argv) {
@@ -47,7 +49,7 @@ int main(int argc, char** argv) {
         useage();
         return 0;
     }
-    
+
     if (get_flag("v") || get_flag("-version")) {
         version();
         return 0;
@@ -58,36 +60,45 @@ int main(int argc, char** argv) {
         char* s = get_flag("-timeout");
         TIMEOUT = l==NULL?s==NULL?0:atoi(s):atoi(l);
         run_as_daemon();
+        // exit called in run_as_daemon() no need for return
+    }
+
+    if(get_flag("s") || get_flag("-stop")) {
+        stop_daemon();
+        return 0;
     }
 
 
     change_background();
-
     return 0;
 }
 
-
-void useage(void) {
+/*
+ * prints useage information
+ */
+void useage(){
     puts("-h --help    : this information");
     puts("-v --version : version informaiton");
     puts("-d --daemon  : run as a daemon");
     puts("-t --timeout : the timeout to use if run as daemon");
+    puts("-s --stop    : stop the daemon if it is running");
 }
 
-void version(void) {
+/*
+ * prints version information
+ */
+void version(){
     puts("rwpcd  ->  random wallpaper changer daemon");
-    puts("version 1.0");
+    puts("version 1.1");
 }
 
-
-
-
-void run_as_daemon(void)
-{
+/*
+ * Starts rwpcd as in daemon mode.
+ */
+void run_as_daemon(){
     pid_t pid, sid;
     pid = fork();
 
-    //printf("%i\n", pid);
 
     // fork off for daemonisation
     if (pid < 0) {
@@ -121,18 +132,15 @@ void run_as_daemon(void)
         change_background();
     }
 
-    // delete the stopfile
+    // delete the stopfile.
     unlink(STOPFILE_PATH);
     exit(EXIT_SUCCESS);
 }
 
-
-
-
-
-
-
-
+/*
+ * Changes the wallpaper to a random wallpaper in your WALLPAPER_DIRECTORY,
+ * as defined in config.h
+ */
 void change_background() {
     struct dirent* dir;
     _LL_* names;
@@ -154,29 +162,30 @@ void change_background() {
         closedir(pwd);
     }
 
-
-
     int r = rand() % size;
     _LL_* touse = names;
     while(r-- > 0) {
         touse = touse -> next;
     }
 
-    char* pname = WALLPAPER_DIRECTORY;
     char* fname = touse -> name;
-    char* flags = TILE_STYLE;
 
-    // meh, hopefully long enough
-    char exec_command[2048];
-    snprintf(exec_command, sizeof exec_command, "feh %s %s/%s", flags, pname, fname);
-    system(exec_command);
+    char exec[2048];
+    snprintf(exec, sizeof exec,"feh %s %s/%s",
+             TILE_STYLE, WALLPAPER_DIRECTORY, fname);
+    system(exec);
 }
 
+/*
+ * Stops the daemon by creating and closing the STOPFILE
+ */
+void stop_daemon() {
+    close(creat(STOPFILE_PATH, O_RDWR));
+}
 
-
-
-
-
+/*
+ * return: 0 if file does not exist, non-zero otherwise.
+ */
 int file_exists(char* path) {
-    return fopen(path, "r") != NULL;
+    return !access(path,F_OK);
 }
