@@ -9,8 +9,8 @@
 
 
 
-rwpcd: changer.c config.h flags.o
-	gcc -Wall changer.c flags.o -o rwpcd
+rwpcd: rwpcd.c config.h flags.o
+	gcc -Wall rwpcd.c flags.o -o rwpcd
 
 flags.o: flags.c flags.h
 	gcc -c flags.c
