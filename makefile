@@ -1,6 +1,6 @@
 #
 # Ted Meyer
-# config file for rwpcd
+# make file for rwpcd
 # random wallpaper changing daemon
 # GPL v2
 #

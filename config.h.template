@@ -1,6 +1,6 @@
 /*
  * Ted Meyer, Joe Jevnik
- * config file for rwpcd
+ * template config file for rwpcd, copy and save as config.h
  * random wallpaper changing daemon
  * GPL v2
  *
@@ -12,12 +12,12 @@
 /*
  * the directory in which rwpcd should search for files
  */
-#define WALLPAPER_DIRECTORY "/home/joejev/pictures/wallpapers"
+#define WALLPAPER_DIRECTORY "/path/to/your/wallpapers"
 
 /*
  * the fallback image to use in case shit hits the fan
  */
-#define FALLBACK_IMAGE "/home/joejev/pictures/wallpapers/nichijou/mio_sweating_1080.png"
+#define FALLBACK_IMAGE "/path/to/default/image"
 
 /*
  * the style of tiling to use when applying the wallpaper
@@ -36,9 +36,9 @@
 /*
  * The interval to change wallpaper (in seconds)
  */
-#define DAEMON_DELAY 2
+#define DAEMON_DELAY 300
 
 /*
  * The file to touch to stop the daemon
  */
-#define STOPFILE_PATH "/home/joejev/.stop_rwpcd"
+#define STOPFILE_PATH "/path/to/stop/daemon/indicator"
