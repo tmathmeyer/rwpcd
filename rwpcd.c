@@ -166,13 +166,19 @@ void change_background() {
         exit(EXIT_FAILURE);
     }
 
-    int r = rand() % size;
-    _LL_* touse = names;
-    while(r-- > 0) {
-        touse = touse -> next;
+    char* fname;
+    if (size)
+    {
+        int r = rand() % size;
+        _LL_* touse = names;
+        while(r-- > 0) {
+            touse = touse -> next;
+        }
+    } else {
+        fname = FALLBACK_IMAGE;
     }
 
-    char* fname = touse -> name;
+    fname = touse -> name;
 
     char exec[2048];
     snprintf(exec, sizeof exec,"feh %s %s/%s",
