@@ -129,8 +129,8 @@ void run_as_daemon(){
     close(STDERR_FILENO);
 
     while (!file_exists(STOPFILE_PATH)) {
-        sleep(TIMEOUT?TIMEOUT:DAEMON_DELAY);
         change_background();
+        sleep(TIMEOUT?TIMEOUT:DAEMON_DELAY);
     }
 
     // delete the stopfile.
