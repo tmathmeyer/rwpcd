@@ -13,7 +13,7 @@
 /*
  * the directory in which rwpcd should search for files
  */
-#define _WALLPAPER_DIRECTORY "/wp"
+#define _WALLPAPER_DIRECTORY "/path/to/your/wallpapers/folder"
 
 /*
  * the fallback image to use in case shit hits the fan
