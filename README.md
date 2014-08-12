@@ -16,6 +16,7 @@ using feh (https://github.com/derf/feh).
 | -i   | --interactive | select an image in interactive mode |
 
 ##Configuration
+variables from config.h look there to edit them.
 | Variable | What it does |
 |----------|--------------|
 | _WALLPAPER_DIRECTORY | the directory that rwpcd looks on your computer for the images. It has to be a folder |
