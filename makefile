@@ -10,7 +10,7 @@
 
 
 rwpcd: rwpcd.c config.h flags.o
-	gcc -Wall rwpcd.c flags.o -o rwpcd
+	gcc -Wall rwpcd.c flags.o -o rwpcd -lncurses -lmenu
 
 flags.o: flags.c flags.h
 	gcc -c flags.c
