@@ -13,7 +13,7 @@
 /*
  * the directory in which rwpcd should search for files
  */
-#define _WALLPAPER_DIRECTORY "/path/to/your/wallpapers/folder"
+#define _WALLPAPER_DIRECTORY "/wp"
 
 /*
  * the fallback image to use in case shit hits the fan
@@ -46,3 +46,10 @@
  * The file to touch to stop the daemon
  */
 #define STOPFILE_PATH "/path/to/a/file/for/killing/the/daemon"
+
+
+/*
+ * Whether or not the daemon should pick up changes to the directory
+ * structure that have been made while the daemon is running.
+ */
+#define PICKUP_CHANGES 0
