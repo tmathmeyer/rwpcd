@@ -4,3 +4,4 @@ rwpcd
 *.a
 config_me.h
 config_backup.h
+*.swp

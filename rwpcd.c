@@ -36,12 +36,12 @@ void usage(char* name);
 void version(void);
 
 static int TIMEOUT = 0;
-
+static char* WALLPAPER_DIRECTORY = _WALLPAPER_DIRECTORY;
 
 int main(int argc, char** argv) {
     srand(time(NULL));
-    char* arg_flags[] = {"t", "-timeout"};
-    set_flags_with_args(arg_flags, 2);
+    char* arg_flags[] = {"t", "-timeout", "p", "-path"};
+    set_flags_with_args(arg_flags, 4);
     parse_flags(argv+1, argc-1);
 
 
@@ -49,6 +49,13 @@ int main(int argc, char** argv) {
         usage(argv[0]);
         return 0;
     }
+
+    char * path = get_flag("-path");
+           path = path==NULL?get_flag("p"):path;
+    if (path != NULL) {
+        WALLPAPER_DIRECTORY=path;
+    }
+
 
     if (get_flag("v") || get_flag("-version")) {
         version();
@@ -83,6 +90,7 @@ void usage(char* name){
     puts("\t-d --daemon  : run as a daemon");
     puts("\t-t --timeout : the timeout to use if run as daemon");
     puts("\t-s --stop    : stop the daemon if it is running");
+    puts("\t-p --path    : provide a path other than the config");
 }
 
 /*
