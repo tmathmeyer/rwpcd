@@ -16,7 +16,6 @@ using feh (https://github.com/derf/feh).
 | -i   | --interactive | select an image in interactive mode |
 
 ##Configuration
-variables from config.h look there to edit them.
 | Variable | What it does |
 |----------|--------------|
 | _WALLPAPER_DIRECTORY | the directory that rwpcd looks on your computer for the images. It has to be a folder |
@@ -25,3 +24,5 @@ variables from config.h look there to edit them.
 | DAEMON_DELAY | how long to sleep in seconds before changing the wallpaper |
 | STOPFILE_PATH | this is how the daemon gets killed; put it somewhere in your file system you have rw permissions |
 | PICKUP_CHANGES | whether the daemon should refresh it's internal representation of the directory every time it changes wallpaper |
+
+variables from config.h look there to edit them.
