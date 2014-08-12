@@ -2,3 +2,6 @@
 rwpcd
 *.o
 *.a
+config_me.h
+config_backup.h
+*.swp
