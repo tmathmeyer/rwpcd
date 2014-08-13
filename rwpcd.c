@@ -214,7 +214,7 @@ name_list * get_file_list(int * size, char * directory) {
             char* name = dir->d_name;
             if (*name != '.') {
                 name_list * newname = malloc(sizeof(struct llname));
-                newname -> name = malloc(sizeof(name));
+                newname -> name = malloc(strlen(name)+1);
                 memcpy(newname -> name, name, strlen(name)+1);
                 newname -> next = names;
                 names = newname;
@@ -261,7 +261,7 @@ MENU * generate_menu (name_list * list, int length) {
 
     int i;
     while(list != NULL) {
-        items[i] = new_item(list -> name, "");
+        items[i] = new_item(" -> ", list -> name);
         list = list -> next;
         i++;
     }
@@ -295,12 +295,7 @@ void do_visual_mode() {
                 menu_driver(my_menu, REQ_UP_ITEM);
                 break;
         }
-        move(20, 0);
-        clrtoeol();
-        mvprintw(20, 0, "Item selected is : %s",
-                item_name(current_item(my_menu)));
-        pos_menu_cursor(my_menu);
-        _change_background(item_name(current_item(my_menu)));
+        _change_background(item_description(current_item(my_menu)));
     }
 
     free_menu(my_menu);
