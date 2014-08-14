@@ -214,7 +214,7 @@ name_list * get_file_list(int * size, char * directory) {
             char* name = dir->d_name;
             if (*name != '.') {
                 name_list * newname = malloc(sizeof(struct llname));
-                newname -> name = malloc(sizeof(name));
+                newname -> name = malloc(strlen(name)+1);
                 memcpy(newname -> name, name, strlen(name)+1);
                 newname -> next = names;
                 names = newname;
@@ -255,16 +255,15 @@ int file_exists(char* path) {
 /*
  * Generate an NCurses-Menu array
  */
-MENU * generate_menu (name_list * list, int length) {
-    ITEM ** items = calloc(length+1, sizeof(ITEM *));
-    items[length] = NULL;
+MENU * generate_menu (name_list * list, int n_choices) {
+    ITEM ** items = calloc(n_choices+1, sizeof(ITEM *));
 
     int i;
-    while(list != NULL) {
-        items[i] = new_item(list -> name, "");
+    for(i = 0; i < n_choices; ++i) {
+        items[i] = new_item(" -> ", list -> name);
         list = list -> next;
-        i++;
     }
+    items[n_choices] = (ITEM *)NULL;
     return new_menu(items);
 }
 
@@ -295,12 +294,7 @@ void do_visual_mode() {
                 menu_driver(my_menu, REQ_UP_ITEM);
                 break;
         }
-        move(20, 0);
-        clrtoeol();
-        mvprintw(20, 0, "Item selected is : %s",
-                item_name(current_item(my_menu)));
-        pos_menu_cursor(my_menu);
-        _change_background(item_name(current_item(my_menu)));
+        _change_background(item_description(current_item(my_menu)));
     }
 
     free_menu(my_menu);
