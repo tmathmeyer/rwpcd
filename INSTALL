@@ -2,3 +2,6 @@ run `make` to make the application in the cwd
 
 run `{sudo} make install` to install the application to
 /usr/local/bin/rwpcd
+
+
+run sudo make manual to install the manpage for rwpcd

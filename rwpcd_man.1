@@ -1,0 +1,33 @@
+.\" Manpage for RWPCD
+.\" Contact tmathmeyer@gmail.com to correct errors or typos.
+.TH RWPCD 1 "27 August 2014" "1.0" "RWPCD man page"
+.SH NAME
+RWPCD \- random wallpaper changing deamon (now with less random!)
+.SH SYNOPSIS
+rwpcd -p [path]
+      -i
+      -h
+      -d
+      -k
+      -t [time]
+.SH DESCRIPTION
+RWPCD was originally a deamon for changing the wallpaper at a predefined
+interval, however now has the ability to specify a path, or run in an
+interactive mode.
+.SH OPTIONS
+-p [path] specifies the directory where rwpcd should chose an image from NOTE:
+it is not recursive
+
+-i run in interactive mode
+
+-h print the help documentation
+
+-d run as a deamon
+
+-k kill the daemon
+
+-t [timeout] set the timeout if it is running as a daemon NOTE: time is in minutes
+.SH BUGS
+to report a bug, please email the author
+.SH AUTHOR
+Ted (tmathmeyer@gmail.com)
