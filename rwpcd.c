@@ -171,7 +171,7 @@ void change_background() {
         names = get_file_list(&list_size, WALLPAPER_DIRECTORY);
     }
 
-    if (list_size == 0) {
+    if (list_size == 0 && PICKUP_CHANGES) {
         puts("please fix your config.h and rebuild");
         exit(EXIT_FAILURE);
     }
@@ -182,11 +182,13 @@ void change_background() {
         selector = selector -> next;
     }
 
+    _change_background(selector -> name);
+
     if (PICKUP_CHANGES) {
         free_file_name_list(names);
     }
 
-    _change_background(selector -> name);
+    
 }
 
 /*
