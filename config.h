@@ -13,7 +13,7 @@
 /*
  * the directory in which rwpcd should search for files
  */
-#define _WALLPAPER_DIRECTORY "/path/to/your/wallpapers/folder"
+#define _WALLPAPER_DIRECTORY "/media/pictures/wallpaper/double_monitor"
 
 /*
  * the fallback image to use in case shit hits the fan
@@ -34,7 +34,7 @@
  *  --bg-tile   : tiles the wallpaper if it doesnt fit
  *                 (USE THIS FOR MULTIPLE MONITORS)
  */
-#define TILE_STYLE "--bg-scale"
+#define TILE_STYLE "--bg-tile"
 
 /*
  * The interval to change wallpaper (in seconds)
@@ -45,11 +45,11 @@
 /*
  * The file to touch to stop the daemon
  */
-#define STOPFILE_PATH "/path/to/a/file/for/killing/the/daemon"
+#define STOPFILE_PATH "/home/ted/.rwpcd"
 
 
 /*
  * Whether or not the daemon should pick up changes to the directory
  * structure that have been made while the daemon is running.
  */
-#define PICKUP_CHANGES 0
+#define PICKUP_CHANGES 1
